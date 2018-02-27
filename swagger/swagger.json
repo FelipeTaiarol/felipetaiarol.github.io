@@ -1,42 +1,98 @@
-{
-    "swagger": "2.0",
+{"swagger": "2.0",
     "info": {
-        "version": "0.0.0",
-        "title": "Ruum API"
+        "description": "This is a simple API to create new ruum",
+        "version": "1.0.0",
+        "title": "One Pager for ruum API integration",
+        "termsOfService": "https://ruumapp.com/",
+        "contact": {
+            "email": "vidyashree.basavaraju@ruumapp.com"
+        }
     },
+    "host": "api-staging.ruumapp.com",
+    "basePath": "/v1",
+    "tags": [
+        {
+            "name": "ruum",
+            "description": "Create your first hello ruum",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "https://ruumapp.com/"
+            }
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "security": [
+        {
+            "BasicAuth": []
+        }
+    ],
     "paths": {
-        "/persons": {
-            "get": {
-                "description": "Gets `Person` objects.\nOptional query param of **size** determines\nsize of returned array\n",
+        "/ruum": {
+            "post": {
+                "tags": [
+                    "ruum"
+                ],
+                "summary": "Create your first hello ruum",
+                "description": "",
+                "operationId": "createRuum",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "parameters": [
                     {
-                        "name": "size",
-                        "in": "query",
-                        "description": "Size of array",
+                        "in": "body",
+                        "name": "body",
+                        "description": "ruum created via api",
                         "required": true,
-                        "type": "number",
-                        "format": "double"
+                        "schema": {
+                            "$ref": "#/definitions/ruum"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "ArrayOfPersons",
-                            "type": "array",
-                            "items": {
-                                "title": "Person",
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "single": {
-                                        "type": "boolean"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Not authenticated"
+                    },
+                    "403": {
+                        "description": "Access token does not have the required scope"
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    },
+    "definitions": {
+        "ruum": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Test from Swagger"
+                },
+                "participants": {
+                    "type": "array",
+                    "xml": {
+                        "name": "participants",
+                        "wrapped": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "example": "vidyashree.basavaraju@sap.com"
                     }
                 }
             }
