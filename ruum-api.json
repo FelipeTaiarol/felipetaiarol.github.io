@@ -14,7 +14,7 @@
   "tags": [
     {
       "name": "ruum",
-      "description": "Please follow the steps below to create a simple ruum.\n1. Click on the Post to explore.\n2. Click on Authenticate and provide the key.\n3. Click on Try it out.\n4. Click on Execute.\n5. Created ruum will be avialable in https://open-staging.ruumapp.com.\"\n",
+      "description": "Please follow the steps below to create a simple ruum.\n1. Click on the Post to explore.\n2. Click on Authorize and provide the key.\n3. Click on Try it out.\n4. Click on Execute.\n5. Created ruum will be avialable in https://open-staging.ruumapp.com.\"\n",
       "externalDocs": {
         "description": "Find out more",
         "url": "https://ruumapp.com/"
