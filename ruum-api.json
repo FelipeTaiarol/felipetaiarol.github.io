@@ -1,24 +1,24 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "\"Ruum by SAP' is project management as a service for all business processes in an enterprise – we simplify & automate team coordination across all your processes. Our simple promise: Spend less time babysitting and more time with your customers/suppliers. We provide a simple API to integrate with Ruum, go ahead and try it our yourself!\n",
+    "description": "\"Ruum by SAP' is project management as a service for all business processes in an enterprise – we simplify & automate team coordination across all your processes. Our simple promise: Spend less time babysitting and more time with your customers. We provide a simple API to integrate with Ruum, go ahead and try it our yourself!\n",
     "version": "1.0.0",
-    "title": "Ruum API integration",
+    "title": "One Pager for 'Ruum by SAP' API integration",
     "termsOfService": "https://ruumapp.com/",
     "contact": {
-      "email": "vidyashree.basavaraju@ruumapp.com"
+      "email": "vidyashree.basavaraju@sap.com"
     }
   },
   "host": "api-staging.ruumapp.com",
   "basePath": "/v1",
+  "externalDocs": {
+    "description": "Find out more about rummapp",
+    "url": "https://ruumapp.com/"
+  },
   "tags": [
     {
       "name": "ruum",
-      "description": "Please follow the steps below to create a simple ruum.\n1. Click on the Post to explore.\n2. Click on Authenticate and provide the key.\n3. Click on Try it out.\n4. Click on Execute.\n5. Created ruum will be avialable in https://open-staging.ruumapp.com.\"\n",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://ruumapp.com/"
-      }
+      "description": "\"Please follow the steps below to create a simple ruum.\n\"1. Click on the Post to explore\"\n\"2. Click on Authorize and provide the key.\"\n\"2. Click on Try it out\"\n\"3. Click on Execute\"\n\"4. Created ruum will be avialable in https://open-staging.ruumapp.com.\"\n"
     }
   ],
   "schemes": [
@@ -85,28 +85,25 @@
   "definitions": {
     "ruum": {
       "type": "object",
+      "description": "structure to create a ruum",
       "properties": {
         "name": {
           "type": "string",
-          "example": "Test ruum API from Swagger"
+          "description": "(Mandatory) Name of the ruum",
+          "example": "Manage Truck Delay"
         },
         "participants": {
           "type": "array",
-          "xml": {
-            "name": "participants",
-            "wrapped": true
-          },
+          "description": "(Mandatory) A list of valid participants collaboration in the ruum",
           "items": {
             "type": "string",
+            "description": "(Mandatory) A valid email id",
             "example": "vidyashree.basavaraju@sap.com"
           }
         },
         "sections": {
           "type": "array",
-          "xml": {
-            "name": "sections",
-            "wrapped": true
-          },
+          "description": "(Mandatory) A valid email id",
           "items": {
             "$ref": "#/definitions/sectionItem"
           }
@@ -115,17 +112,16 @@
     },
     "sectionItem": {
       "type": "object",
+      "description": "(Mandatory) A Section in a ruum",
       "properties": {
         "title": {
           "type": "string",
-          "example": "Create activities from swagger"
+          "description": "(Mandatory) Title for the section",
+          "example": "Find out alternative supply chain"
         },
         "content": {
           "type": "array",
-          "xml": {
-            "name": "content",
-            "wrapped": true
-          },
+          "description": "(Mandatory) Section details",
           "items": {
             "$ref": "#/definitions/content"
           }
@@ -134,6 +130,7 @@
     },
     "content": {
       "type": "object",
+      "description": "(Mandatory) Section Contents details",
       "properties": {
         "type": {
           "type": "string",
@@ -141,7 +138,8 @@
         },
         "text": {
           "type": "string",
-          "example": "This ruum was created using https://api-staging.ruumapp.com/v1/ruums via swagger"
+          "description": "(Mandatory) content value",
+          "example": "The delivery #BV3445468 is stuck in the snow, we might have to find an alternative"
         }
       }
     }
