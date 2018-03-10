@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+    <h1 >Ruum REST API</h1>
+
+    <h2>Overview</h2>
+
+    <p>The Ruum REST API makes it possible to integrate external systems with Ruum. It provides capabilities such as:</p>
+
+    <ul>
+    <li>Create a new ruum with Sections which can contain Text, Tasks and Files.</li>
+    <li>Update the Tasks inside an existing ruum.</li>
+    <li>Query ruums.</li>
+    </ul>
+
+    <h3>Base URL</h3>
+
+    <p>All URLs referenced in this documentation have the following base unless otherwise specified:</p>
+
+    <p><a href="https://api.ruumapp.com/v1/">https://api.ruumapp.com/v1/</a></p>
+
+    <h3>Naming convention</h3>
+
+    <p>‘Ruum’ is used to refer to the application. <br />
+    ‘ruum’ is an individual project within Ruum.</p>
+
+    <h2 >Creating an Account</h2>
+
+    <p>In order to consume our REST API you will need an Integration Account.</p>
+
+    <p>In order to get an Integration Account send an email to: team@ruumapp.com.</p>
+
+    <h2>Authentication</h2>
+
+    <p>HTTP requests to the API are protected with <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic authentication</a>.</p>
+
+    <h2>API Endpoints</h2>
+
+    <h3>Create a ruum.</h3>
+
+    <p>Url: /v1/ruums<br />
+    Method: POST<br />
+    body: Ruum (see object model definition below)<br />
+    Response:</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    {
+        ruumId: string
+    }
+    </code></pre></div></div>
+
+    <h3 >Update a Task inside a ruum.</h3>
+
+    <h3 >Query ruums.</h3>
+
+    <p>Url: /v1/ruums/:ruumId<br />
+    Method: GET<br />
+    Response: Ruum (see object model definition below)</p>
+
+    <h2 >Object Model</h2>
+
+    <p>Typescript definition of the data model the API uses.</p>
+
+    <p>Ruum</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>interface IntegrationRuum{
+        ruumId: string;
+        status?: RuumStatus;
+        externalSystemLink: ExternalSystemLink;
+        name: string;
+        /** A list emails of participants that will be invited to this ruum. */
+        participants: string[];
+        sections: CanvasSection[];
+    }
+
+    export interface ExternalSystemLink{
+        objectId: string;
+        objectType: string;
+    }
+
+    export interface CanvasSection{
+        id: string;
+        title: string;
+        /** Should be Task, Paragraph or Attachment */
+        content: any[];
+    }
+
+    export interface Paragraph{
+        type: 'paragraph';
+        text: string;
+    }
+
+    export interface Task{
+        id: string;
+        type: 'task';
+        description: string;
+        startDate?: Day,
+        dueDate?: Day,
+        assignees?: string[],
+        status: TaskStatus;
+        externalSystemLink?: ExternalSystemLink;
+    }
+
+    export interface File{
+        id: string;
+        type: 'file';
+        fileType: string;
+        fileName: string;
+        /** base64 enconded content */
+        content: string;
+    }
+
+    </code></pre></div></div>
+    </div>
+  </body>
+</html>
