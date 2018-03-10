@@ -51,7 +51,8 @@
 
     <p>Url: /v1/ruums<br />
     Method: POST<br />
-    body: </p>
+    body: Ruum (see typescript definition of JSON payload below)</p>
+    Example</p>  
     <div class="highlighter-rouge">
         <div class="highlight">
             <pre class="highlight">
@@ -114,8 +115,7 @@
     <p>Url: /v1/ruums/:ruumId/externallink/:objectId<br />
     Method: PUT<br />
     body: UpdateTaskPayload <br />
-    Example: </p>
-    <p>If you created a Task in a ruum with id ruum_123 and externalSystemLink { objectType: 'any', objectId: 'obj1' }</p>
+    <p>Example:  If you created a Task in a ruum with id ruum_123 and externalSystemLink { objectType: 'any', objectId: 'obj1' }</p>
     <div class="highlighter-rouge">
         <div class="highlight">
             <pre class="highlight">
@@ -139,7 +139,7 @@ PUT /v1/ruums/ruum_123/externallink/obj1
     
     <h3>Update a Task inside a ruum by task id (soon)</h3>
 
-    <h3>Get all ruums create by integration account</h3>
+    <h3>Get all ruums create by the Integration Account</h3>
     <p>Url: /v1/ruums<br />
     Method: GET<br />
     Response: Ruum[] (see object model definition below)</p>
@@ -168,52 +168,54 @@ PUT /v1/ruums/ruum_123/externallink/obj1
 
     <p>Ruum</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>interface IntegrationRuum{
-        ruumId: string;
-        status?: RuumStatus;
-        externalSystemLink: ExternalSystemLink;
-        name: string;
-        /** A list emails of participants that will be invited to this ruum. */
-        participants: string[];
-        sections: CanvasSection[];
-    }
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+interface IntegrationRuum{
+    ruumId: string;
+    status?: RuumStatus;
+    externalSystemLink: ExternalSystemLink;
+    name: string;
+    /** A list of emails of participants that will be invited to this ruum. */
+    participants: string[];
+    sections: CanvasSection[];
+}
 
-    export interface ExternalSystemLink{
-        objectId: string;
-        objectType: string;
-    }
+export interface ExternalSystemLink{
+    objectId: string;
+    objectType: string;
+}
 
-    export interface CanvasSection{
-        id: string;
-        title: string;
-        /** Should be Task, Paragraph or Attachment */
-        content: any[];
-    }
+export interface CanvasSection{
+    id: string;
+    title: string;
+    /** Should be Task, Paragraph or Attachment */
+    content: any[];
+}
 
-    export interface Paragraph{
-        type: 'paragraph';
-        text: string;
-    }
+export interface Paragraph{
+    type: 'paragraph';
+    text: string;
+}
 
-    export interface Task{
-        id: string;
-        type: 'task';
-        description: string;
-        startDate?: Day,
-        dueDate?: Day,
-        assignees: string[],
-        status: TaskStatus;
-        externalSystemLink?: ExternalSystemLink;
-    }
+export interface Task{
+    id: string;
+    type: 'task';
+    description: string;
+    startDate?: Day,
+    dueDate?: Day,
+    /** A list of emails. The emails should be in the participants as well. */
+    assignees: string[],
+    status: TaskStatus;
+    externalSystemLink?: ExternalSystemLink;
+}
 
-    export interface File{
-        id: string;
-        type: 'file';
-        fileType: string;
-        fileName: string;
-        /** base64 enconded content */
-        content: string;
-    }
+export interface File{
+    id: string;
+    type: 'file';
+    fileType: string;
+    fileName: string;
+    /** base64 enconded content */
+    content: string;
+}
     </code></pre></div></div>
     </div>
   </body>
