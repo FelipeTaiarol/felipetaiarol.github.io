@@ -3,10 +3,10 @@
 
 ## Overview
 
-The Ruum integration API makes it possible to integrate external systems with Ruum. It provides capabilities such as:
+The Ruum REST API makes it possible to integrate external systems with Ruum. It provides capabilities such as:
 
 - Create a new ruum with Sections which can contain Text, Tasks and Files.
-- Update the tasks inside an existing ruum.
+- Update the Tasks inside an existing ruum.
 - Query ruums.
 
 ### Base URL
