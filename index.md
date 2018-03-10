@@ -78,7 +78,7 @@ export interface ExternalSystemLink{
 export interface CanvasSection{
     id: string;
     title: string;
-    /** Should be Task, Paragraph, Attachment or ExternalField */
+    /** Should be Task, Paragraph or Attachment */
     content: any[];
 }
 
@@ -105,13 +105,6 @@ export interface File{
     fileName: string;
     /** base64 enconded content */
     content: string;
-}
-
-export interface ExternalField{
-    fieldId: string;
-    fieldLabel: string;
-    fieldValue: string;
-    type: 'external_field'
 }
 
 ```
