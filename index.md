@@ -1,4 +1,3 @@
-
 # Ruum REST API
 
 ## Overview
@@ -13,7 +12,7 @@ The Ruum REST API makes it possible to integrate external systems with Ruum. It 
 
 All URLs referenced in this documentation have the following base unless otherwise specified:
 
-https://api.ruumapp.com/v1/
+[https://api.ruumapp.com/v1/](https://api.ruumapp.com/v1/)
 
 ### Naming convention
 
