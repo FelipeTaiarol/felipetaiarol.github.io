@@ -8,9 +8,9 @@
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
-    <h1 >Ruum REST API</h1>
+<h1 >Ruum REST API</h1>
 
-    <h2>Overview</h2>
+<h2>Overview</h2>
 
     <p>The Ruum REST API makes it possible to integrate external systems with Ruum. It provides capabilities such as:</p>
 
@@ -31,43 +31,143 @@
     <p>‘Ruum’ is used to refer to the application. <br />
     ‘ruum’ is an individual project within Ruum.</p>
 
-    <h2 >Creating an Account</h2>
+<h2 >Creating an Account</h2>
 
     <p>In order to consume our REST API you will need an Integration Account.</p>
 
-    <p>In order to get an Integration Account send an email to: team@ruumapp.com.</p>
+    <p>In order to get an Integration Account send an email to: <a href="mailto:team@ruumapp.com?Subject=Ruum%20Integration%20Account" target="_top">team@ruumapp.com</a>
+    </p>
 
     <h2>Authentication</h2>
 
     <p>HTTP requests to the API are protected with <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic authentication</a>.</p>
-
+    
+    <p>When we send you your Integration Account details you will receive an AccountId and a SecretKey as well as an
+        authentication header that should be sent in all requests. </p>
+    
     <h2>API Endpoints</h2>
 
-    <h3>Create a ruum.</h3>
+    <h3>Create ruum</h3>
 
     <p>Url: /v1/ruums<br />
     Method: POST<br />
-    body: Ruum (see object model definition below)<br />
+    body: </p>
+    <div class="highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight">
+            <code>
+{
+  "name":"Complete Ruum From API",
+  "externalSystemLink":{
+    "objectType":"deal",
+    "objectId":"deal_123"
+  },
+  "participants": ["participant1@compay.com", "participant2@compay.com"],
+  "sections":[{
+    "title":"You can send Text, Tasks and Files",
+    "content":[{
+      "type": "paragraph",
+      "text": "This ruum was created using https://api.ruumapp.com/v1/ruums"
+    },{
+      "type":"task",
+      "description":"Schedule kickokff meeting",
+      "startDate": {
+        "day": "01",
+        "month": "1",
+        "year": "2018"
+      },
+      "dueDate": {
+        "day": "03",
+        "month": "1",
+        "year": "2018"
+      },
+      "status": "OPEN",
+      "assignees": ["participant1@compay.com"],
+      "externalSystemLink":{
+        "objectType":"activity",
+        "objectId":"activity_123"
+      }
+    },{
+    	"type": "file",
+    	"fileType": "image/png",
+    	"fileName": "ruum_logo.png",
+    	"content": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAA"
+    }]
+  }]
+}
+            </code>
+            </pre>
+        </div>
+    </div>
     Response:</p>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-    {
-        ruumId: string
-    }
-    </code></pre></div></div>
+    <div class="highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight">
+            <code>
+{ ruumId: string }
+            </code>
+            </pre>
+        </div>
+    </div>
 
-    <h3 >Update a Task inside a ruum.</h3>
+    <h3>Update a Task inside a ruum by external link</h3>
+    <p>Url: /v1/ruums/:ruumId/externallink/:objectId<br />
+    Method: PUT<br />
+    body: UpdateTaskPayload <br />
+    Example: </p>
+    <p>If you created a Task in a ruum with id ruum_123 and externalSystemLink { objectType: 'any', objectId: 'obj1' }</p>
+    <div class="highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight">
+            <code>
+PUT /v1/ruums/ruum_123/externallink/obj1
+{ 
+    description: 'new description',
+    startDate: null,
+    dueDate: {
+        "day": "01",
+        "month": "1",
+        "year": "2018"
+    },
+    status: 'DONE',
+    assignees: ['newassignee@ruumapp.com']
+}
+            </code>
+            </pre>
+        </div>
+    </div>
 
-    <h3 >Query ruums.</h3>
+    <h3>Update a Task inside a ruum by task id (soon)</h3>
 
+    <h3>Get all ruums create by integration account</h3>
+    <p>Url: /v1/ruums<br />
+    Method: GET<br />
+    Response: Ruum[] (see object model definition below)</p>
+
+    <h3>Get ruum by id</h3>
     <p>Url: /v1/ruums/:ruumId<br />
     Method: GET<br />
     Response: Ruum (see object model definition below)</p>
 
-    <h2 >Object Model</h2>
+
+<h2>External System Links</h2>
+
+    <p>External System Links is way we provide to link objects in Ruum to objects in an external system.</p>
+    <p>If you are integrating a CRM with Ruum, for example, you might want to link a ruum to a Deal and
+    Activities inside that Deal to Tasks inside the ruum (see create ruum example above). This makes it easier to integrate 
+    systems as when something changes in your system you can update the corresponding task inside Ruum without having to 
+    know the Task id.</p>
+    
+    <p>In the future we will also make it possible to configure a HTTP endpoint that will receive a JSON payload every time a 
+        ruum created by a given Integration Account changes. Because of the External System Link of the ruum and of the Tasks it will
+        be possible for the other system to know which objects it has to update when it receives the paylod.
+    </p>
+<h2>Object Model</h2>
 
     <p>Typescript definition of the data model the API uses.</p>
 
     <p>Ruum</p>
+
     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>interface IntegrationRuum{
         ruumId: string;
         status?: RuumStatus;
@@ -101,7 +201,7 @@
         description: string;
         startDate?: Day,
         dueDate?: Day,
-        assignees?: string[],
+        assignees: string[],
         status: TaskStatus;
         externalSystemLink?: ExternalSystemLink;
     }
@@ -114,7 +214,6 @@
         /** base64 enconded content */
         content: string;
     }
-
     </code></pre></div></div>
     </div>
   </body>
