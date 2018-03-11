@@ -15,9 +15,9 @@
     <p>The Ruum REST API makes it possible to integrate external systems with <a href="https://open.ruumapp.com/">Ruum</a>. It provides capabilities such as:</p>
 
     <ul>
-    <li>Create a new ruum with Sections which can contain Text, Tasks and Files.</li>
-    <li>Update the Tasks inside an existing ruum.</li>
-    <li>Query ruums.</li>
+        <li>Create a new ruum with Sections which can contain Text, Tasks and Files.</li>
+        <li>Update the Tasks inside an existing ruum.</li>
+        <li>Query ruums.</li>
     </ul>
 
     <h3>Base URL</h3>
@@ -51,7 +51,7 @@
 
     <p>Url: /v1/ruums<br />
     Method: POST<br />
-    body: Ruum (see typescript definition of JSON payload below)</p>
+    body: Ruum (see typescript definition of JSON payload <a href="#object_model">here</a>)</p>
     Example</p>  
     <div class="highlighter-rouge">
         <div class="highlight">
@@ -105,17 +105,18 @@
         <div class="highlight">
             <pre class="highlight">
             <code>
-{ ruumId: string }
+{ ruumId: ruum_123 }
             </code>
             </pre>
         </div>
     </div>
 
-    <h3>Update a Task inside a ruum by external link</h3>
+    <h3 id="update">Update a Task inside a ruum by external link</h3>
     <p>Url: /v1/ruums/:ruumId/externallink/:objectId<br />
     Method: PUT<br />
     body: UpdateTaskPayload <br />
-    <p>Example:  If you created a Task in a ruum with id ruum_123 and externalSystemLink { objectType: 'any', objectId: 'obj1' }</p>
+    <p>Example:  If you created a Task in a ruum with id ruum_123 and <a href="#external_link">externalSystemLink</a>:</p>
+    <p><code>{ objectType: 'any', objectId: 'obj1' }</code></p>
     <div class="highlighter-rouge">
         <div class="highlight">
             <pre class="highlight">
@@ -138,6 +139,7 @@ PUT /v1/ruums/ruum_123/externallink/obj1
     </div>
     
     <h3>Update a Task inside a ruum by task id (soon)</h3>
+    <p>Update a task using the id the task has inside Ruum instead of the externalSystemLink.</p>
 
     <h3>Get all ruums create by the Integration Account</h3>
     <p>Url: /v1/ruums<br />
@@ -150,19 +152,25 @@ PUT /v1/ruums/ruum_123/externallink/obj1
     Response: Ruum (see object model definition below)</p>
 
 
-<h2>External System Links</h2>
+<h2 id="external_link">External System Links</h2>
 
-    <p>External System Links is way we provide to link objects in Ruum to objects in an external system.</p>
-    <p>If you are integrating a CRM with Ruum, for example, you might want to link a ruum to a Deal and
-    Activities inside that Deal to Tasks inside the ruum (see create ruum example above). This makes it easier to integrate 
-    systems as when something changes in your system you can update the corresponding task inside Ruum without having to 
-    know the Task id.</p>
+    <p>External System Links are useful when you want to integrate a system with Ruum rather than simply consuming the API to create ruums.</p>
+
+    <p>For example: If you are integrating a CRM system with Ruum you might want to make it in such a way that every Deal in CRM is linked to a ruum in Ruum 
+        and every Activity inside that Deal is linked to a Task inside the ruum.</p>
+    <img src="/img/external_system_links.png"></img>
     
+<h2 id="webhooks">Web Hooks (soon)</h2>
+
     <p>In the future we will also make it possible to configure a HTTP endpoint that will receive a JSON payload every time a 
-        ruum created by a given Integration Account changes. Because of the External System Link of the ruum and of the Tasks it will
-        be possible for the other system to know which objects it has to update when it receives the paylod.
-    </p>
-<h2>Object Model</h2>
+        ruum created by a given Integration Account changes.</p>
+        
+    <p>With that and <a href="/#external_link">External System Links</a>, when your system receives the JSON payload it can know, for example,
+    that ruum 'ruum_123' is linked to Deal 'deal_123' and the Task 'task_123' is linked to Activity 'activity_123'. 
+    
+    <p>So when Ruum sends a JSON payload to the HTTP endpoint you configured your system can look to the externalSystemLinks and know which objects to update.</p>
+
+<h2 id="object_model">Object Model</h2>
 
     <p>Typescript definition of the data model the API uses.</p>
 
