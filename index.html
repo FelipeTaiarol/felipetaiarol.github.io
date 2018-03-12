@@ -221,6 +221,8 @@ interface IntegrationRuum{
     sections: CanvasSection[];
 }
 
+export tpye RuumStatus = 'ON_TRACK' | 'MINOR_DELAY' | 'MAJOR_DELAY' | 'COMPLETED'
+
 export interface ExternalSystemLink{
     objectId: string;
     objectType: string;
