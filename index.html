@@ -171,13 +171,14 @@ PUT /v1/ruums/ruum_123/tasks/task_123
     <h3>Get all ruums create by the Integration Account</h3>
     <p>Url: /v1/ruums<br />
     Method: GET<br />
-    Response: Ruum[] (see object model definition below)</p>
+    Response: Ruum[] (see object model definition below).</p>
+    <p>Only Tasks are returned inside the section content, no Text or Files.</p>
 
     <h3>Get ruum by id</h3>
     <p>Url: /v1/ruums/:ruumId<br />
     Method: GET<br />
-    Response: Ruum (see object model definition below)</p>
-
+    Response: Ruum (see typescript definition of JSON payload <a href="#object_model">here</a>).</p>
+    <p>Only Tasks are returned inside the section content, no Text or Files.</p>
 
 <h2 id="external_link">External System Links</h2>
 
