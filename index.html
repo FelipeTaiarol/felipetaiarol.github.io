@@ -115,7 +115,7 @@
     </div>
 
     <h3 id="update">Update a Task inside a ruum by external link</h3>
-    <p>Url: /v1/ruums/:ruumId/externallink/:objectId<br />
+    <p>Url: /v1/ruums/:ruumId/tasks/externallink/:objectId<br />
     Method: PUT<br />
     body: UpdateTaskPayload <br />
     <p>Example:  If you created a Task in a ruum with id ruum_123 and <a href="#external_link">externalSystemLink</a>:</p>
@@ -141,8 +141,32 @@ PUT /v1/ruums/ruum_123/tasks/externallink/obj1
         </div>
     </div>
     
-    <h3>Update a Task inside a ruum by task id (soon)</h3>
-    <p>Update a task using the id the task has inside Ruum instead of the externalSystemLink.</p>
+    <h3>Update a Task inside a ruum by task id</h3>
+    <p>Update a task using the id the task has inside Ruum.</p>
+    <p>Url: /v1/ruums/:ruumId/tasks/:taskId<br />
+    Method: PUT<br />
+    body: UpdateTaskPayload <br />
+    <p>Example:</p>
+    <div class="highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight">
+            <code>
+PUT /v1/ruums/ruum_123/tasks/task_123
+{ 
+    description: 'new description',
+    startDate: null,
+    dueDate: {
+        "day": "01",
+        "month": "1",
+        "year": "2018"
+    },
+    status: 'DONE',
+    assignees: ['newassignee@ruumapp.com']
+}
+            </code>
+            </pre>
+        </div>
+    </div>
 
     <h3>Get all ruums create by the Integration Account</h3>
     <p>Url: /v1/ruums<br />
