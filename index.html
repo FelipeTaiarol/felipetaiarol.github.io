@@ -34,7 +34,7 @@
     <p>‘Ruum’ is used to refer to the application. <br />
     ‘ruum’ is an individual project within Ruum.</p>
 
-<h2 >Creating an Account</h2>
+<h2>Creating an Account</h2>
 
     <p>In order to consume our REST API you will need an Integration Account.</p>
 
@@ -52,9 +52,9 @@
     
     <img src="/docs/img/postman.png"></img>
     
-    <h2>API Endpoints</h2>
+<h2>API Endpoints</h2>
 
-    <h3>Create ruum</h3>
+<h3 id="create">1. Create ruum</h3>
 
     <p>Url: /v1/ruums<br />
     Method: POST<br />
@@ -118,7 +118,31 @@
         </div>
     </div>
 
-    <h3 id="update">Update a Task inside a ruum by external link</h3>
+<h3 id="update">2. Update Ruum</h3>
+
+    <p>Url: /v1/ruums/:ruumId<br />
+    Method: PUT<br />
+    body: UpdateRuumPayload <br />
+    <div class="highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight">
+            <code>
+PUT /v1/ruums/ruum_123
+{
+    name: 'new name',
+    status: 'ON_TRACK',
+    /** This will completly replace the participants list, removing access from participants that were in the ruum
+     but are not in this list and sending an invitation email to new ones.*/
+    participants: ['new_and_only_one@sap.com']
+}
+            </code>
+            </pre>
+        </div>
+    </div>
+
+
+<h3 id="update_task1">3.1 Update a Task inside a ruum by external link</h3>
+
     <p>Url: /v1/ruums/:ruumId/tasks/externallink/:objectId<br />
     Method: PUT<br />
     body: UpdateTaskPayload <br />
@@ -146,7 +170,7 @@ PUT /v1/ruums/ruum_123/tasks/externallink/obj1
         </div>
     </div>
     
-    <h3>Update a Task inside a ruum by task id</h3>
+<h3 id="update_task2">3.2 Update a Task inside a ruum by task id</h3>
     <p>Update a task using the id the task has inside Ruum.</p>
     <p>Url: /v1/ruums/:ruumId/tasks/:taskId<br />
     Method: PUT<br />
@@ -174,13 +198,13 @@ PUT /v1/ruums/ruum_123/tasks/task_123
         </div>
     </div>
 
-    <h3>Get all ruums create by the Integration Account</h3>
+<h3 id="getall">4.1 Get all ruums create by the Integration Account</h3>
     <p>Url: /v1/ruums<br />
     Method: GET<br />
-    Response: Ruum[] (see object model definition below).</p>
+    Response: Ruum[] (see typescript definition of JSON payload <a href="#object_model">here</a>).</p>
     <p>Only Tasks are returned inside the section content, no Text or Files.</p>
 
-    <h3>Get ruum by id</h3>
+<h3 id="getid">4.2 Get ruum by id</h3>
     <p>Url: /v1/ruums/:ruumId<br />
     Method: GET<br />
     Response: Ruum (see typescript definition of JSON payload <a href="#object_model">here</a>).</p>
@@ -217,7 +241,7 @@ PUT /v1/ruums/ruum_123/tasks/task_123
     <p>Ruum</p>
 
     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-interface IntegrationRuum{
+interface Ruum{
     ruumId: string;
     status?: RuumStatus;
     externalSystemLink: ExternalSystemLink;
