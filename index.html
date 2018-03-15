@@ -71,7 +71,7 @@ POST /v1/ruums
     "objectType":"deal",
     "objectId":"deal_123"
   },
-  "participants": ["participant1@compay.com", "participant2@compay.com"],
+  "participants": ["participant1@ruumapp.com", "participant2@ruumapp.com"],
   "sections":[{
     "title":"You can send Text, Tasks and Files",
     "content":[{
@@ -125,7 +125,7 @@ PUT /v1/ruums/ruum_123
     status: 'ON_TRACK',
     /** This will completly replace the participants list, removing access from participants that were in the ruum
      but are not in this list and sending an invitation email to new ones.*/
-    participants: ['new_and_only_one@sap.com']
+    participants: ['new_and_only_one@ruumapp.com']
 }
             </code>
             </pre>
@@ -217,7 +217,7 @@ PUT /v1/ruums/ruum_123/tasks/task_123
 POST /v1/ruums/:ruumId/duplicate
 { 
     newRuumName: 'new ruum name',
-    participants: ['new_ruum_participant@sap.com']
+    participants: ['new_ruum_participant@ruumapp.com']
 }
             </code>
             </pre>
