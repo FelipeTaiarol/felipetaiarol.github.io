@@ -123,14 +123,15 @@ PUT /v1/ruums/ruum_123
 {
     name: 'new name',
     status: 'ON_TRACK',
-    /** This will completly replace the participants list, removing access from participants that were in the ruum
-     but are not in this list and sending an invitation email to new ones.*/
+    /** This will completly replace the participants list. 
+    If you want to simply add a new participant you have to send the complete list with the new one. */
     participants: ['new_and_only_one@ruumapp.com']
 }
             </code>
             </pre>
         </div>
     </div>
+    <code>RuumStatus = 'ON_TRACK' | 'MINOR_DELAY' | 'MAJOR_DELAY' | 'COMPLETED'</code>
 
 
 <h3 id="update_task1">3.1 Update a Task inside a ruum by external link</h3>
@@ -207,8 +208,8 @@ PUT /v1/ruums/ruum_123/tasks/task_123
     Method: POST<br />
     body: DuplicateRuumPayload <br />
     Response:  <code>{ ruumId: string }</code> <br />
-    <p>When you call this endpoint a new ruum is going to be created. All text, tasks, files, emails and labels from ':ruumId' will be copied. 
-        The tasks will have no start date, due date or assignees. All comments will not be copied. The new participants will be only the ones sent in the request body.</p>
+    <p>When you call this endpoint a new ruum is going to be created. All sections, tasks, files, emails and labels from ':ruumId' will be copied. 
+        The tasks will have no start date, due date or assignees. All comments will not be copied. The participants will be only the ones sent in the request body.</p>
     <p>Example:</p>
     <div class="highlighter-rouge">
         <div class="highlight">
@@ -265,7 +266,7 @@ interface Ruum{
     sections: CanvasSection[];
 }
 
-export tpye RuumStatus = 'ON_TRACK' | 'MINOR_DELAY' | 'MAJOR_DELAY' | 'COMPLETED'
+export type RuumStatus = 'ON_TRACK' | 'MINOR_DELAY' | 'MAJOR_DELAY' | 'COMPLETED'
 
 export interface ExternalSystemLink{
     objectId: string;
