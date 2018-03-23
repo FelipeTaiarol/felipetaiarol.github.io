@@ -46,19 +46,20 @@
 
     <p>HTTP requests to the API are protected with HTTP Basic Authentication.</p>
     
-    <p>Together with your Integration Account details you will receive an AccountId and a SecretKey as well as an
-        Authorization header that should be sent in all requests. </p>
-    <p>This is how the headers should look like in Postman, for example:</p>
-    
+    <p>Once we have reviewed your application, you will receive and AccountId and a SecretKey</p>
+    <p>You will also receive a Authorization header that should be sent in all request, see example below:</p>
+
     <img src="/docs/img/postman.png"></img>
     
 <h2>API Endpoints</h2>
+
+<p>You can download a Postman collection <a href="/Ruum.postman_collection">here</a><p>
 
 <h3 id="create"><a href="#create">1. Create ruum</a></h3>
 
     <p>Url: /v1/ruums<br />
     Method: POST<br />
-    body: Ruum (see typescript definition of JSON payload <a href="#object_model">here</a>)</p>
+    body: Ruum (see typescript definition of JSON payload <a href="#data_model">here</a>)</p>
     Example</p>  
     <div class="highlighter-rouge">
         <div class="highlight">
@@ -71,7 +72,7 @@ POST /v1/ruums
     "objectType":"deal",
     "objectId":"deal_123"
   },
-  "participants": ["participant1@ruumapp.com", "participant2@ruumapp.com"],
+  "participants": ["participant1@company.com", "participant2@company.com"],
   "sections":[{
     "title":"You can send Text, Tasks and Files",
     "content":[{
@@ -121,20 +122,32 @@ POST /v1/ruums
             <code>
 PUT /v1/ruums/ruum_123
 {
-    name: 'new name',
-    status: 'ON_TRACK',
-    /** This will completly replace the participants list. 
-    If you want to simply add a new participant you have to send the complete list with the new one. */
-    participants: ['new_and_only_one@ruumapp.com']
+    "name": "new name",
+    "status": "ON_TRACK",
+    "participants": ["new_and_only_one@ruumapp.com"]
 }
             </code>
             </pre>
         </div>
     </div>
-    <code>RuumStatus = 'ON_TRACK' | 'MINOR_DELAY' | 'MAJOR_DELAY' | 'COMPLETED'</code>
+   <p><code>RuumStatus = 'ON_TRACK' | 'MINOR_DELAY' | 'MAJOR_DELAY' | 'COMPLETED'</code></p>
+
+   <p> This will completly replace the participants list. If you want to simply add a new participant you have to 
+        send the complete list with the new one.</p>
+
+<h3 id="getall"><a href="#getall">3.1 Get all ruums create by the Integration Account</a></h3>
+    <p>Url: /v1/ruums<br />
+    Method: GET<br />
+    Response: Ruum[] (see typescript definition of JSON payload <a href="#data_model">here</a>).</p>
+    <p>Only Tasks are returned inside the section content, no Text or Files.</p>
+
+<h3 id="getid"><a href="#getid">3.2 Get ruum by id</a></h3>
+    <p>Url: /v1/ruums/:ruumId<br />
+    Method: GET<br />
+    Response: Ruum (see typescript definition of JSON payload <a href="#data_model">here</a>).</p>
 
 
-<h3 id="update_task1"><a href="#update_task1">3.1 Update a Task inside a ruum by external link<a/></h3>
+<h3 id="update_task1"><a href="#update_task1">4.1 Update a Task inside a ruum by external link<a/></h3>
 
     <p>Url: /v1/ruums/:ruumId/tasks/externallink/:objectId<br />
     Method: PUT<br />
@@ -147,23 +160,23 @@ PUT /v1/ruums/ruum_123
             <code>
 PUT /v1/ruums/ruum_123/tasks/externallink/obj1
 { 
-    description: 'new description',
-    startDate: null,
-    dueDate: {
+    "description": "new description",
+    "startDate": null,
+    "dueDate": {
         "day": "01",
         "month": "1",
         "year": "2018"
     },
-    status: 'DONE',
-    /** this will replace the existing assignees list */
-    assignees: ['newassignee@ruumapp.com']
+    "status": "DONE",
+    "assignees": ["newassignee@company.com"]
 }
             </code>
             </pre>
         </div>
     </div>
-    
-<h3 id="update_task2"><a href="#update_task2">3.2 Update a Task inside a ruum by task id</a></h3>
+<p>Sending "assignees" will replace the existing list of assignees</p>
+
+<h3 id="update_task2"><a href="#update_task2">4.2 Update a Task inside a ruum by task id</a></h3>
     <p>Update a task using the id the task has inside Ruum.</p>
     <p>Url: /v1/ruums/:ruumId/tasks/:taskId<br />
     Method: PUT<br />
@@ -175,34 +188,25 @@ PUT /v1/ruums/ruum_123/tasks/externallink/obj1
             <code>
 PUT /v1/ruums/ruum_123/tasks/task_123
 { 
-    description: 'new description',
-    startDate: null,
-    dueDate: {
+    "description": "new description",
+    "startDate": null,
+    "dueDate": {
         "day": "01",
         "month": "1",
         "year": "2018"
     },
-    status: 'DONE',
-    /** this will replace the existing assignees list */    
-    assignees: ['newassignee@ruumapp.com']
+    "status": "DONE",
+    "assignees": ["newassignee@company.com"]
 }
             </code>
             </pre>
         </div>
     </div>
 
-<h3 id="getall"><a href="#getall">4.1 Get all ruums create by the Integration Account</a></h3>
-    <p>Url: /v1/ruums<br />
-    Method: GET<br />
-    Response: Ruum[] (see typescript definition of JSON payload <a href="#object_model">here</a>).</p>
-    <p>Only Tasks are returned inside the section content, no Text or Files.</p>
+    <p>Sending "assignees" will replace the existing list of assignees</p>
 
-<h3 id="getid"><a href="#getid">4.2 Get ruum by id</a></h3>
-    <p>Url: /v1/ruums/:ruumId<br />
-    Method: GET<br />
-    Response: Ruum (see typescript definition of JSON payload <a href="#object_model">here</a>).</p>
 
-<h3 id="duplicate"><a href="#duplicate">5. Duplicate Ruums</a></h3>
+<h3 id="duplicate"><a href="#duplicate">5. Duplicate Ruum</a></h3>
     <p>Duplicate ruum by id</p>
     <p>Url: /v1/ruums/:ruumId/duplicate<br />
     Method: POST<br />
@@ -217,8 +221,8 @@ PUT /v1/ruums/ruum_123/tasks/task_123
             <code>
 POST /v1/ruums/:ruumId/duplicate
 { 
-    newRuumName: 'new ruum name',
-    participants: ['new_ruum_participant@ruumapp.com']
+    "newRuumName": "new ruum name",
+    "participants": ["new_ruum_participant@company.com"]
 }
             </code>
             </pre>

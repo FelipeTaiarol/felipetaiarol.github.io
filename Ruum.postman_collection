@@ -1,0 +1,196 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Ruum",
+		"_postman_id": "55b7f74c-4466-5045-d4b7-798f52d82b20",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a Ruum",
+			"request": {
+				"url": "https://api.ruumapp.com/v1/ruums",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "YOUR_AUTH_KEY",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Ruum API Test\",\n  \"externalSystemLink\":{\n    \"objectType\":\"deal\",\n    \"objectId\":\"deal_123\"\n  },\n  \"participants\": [\"ruum.user@xyz.com\"],\n  \"sections\":[{\n    \"title\":\"You can send Text, Tasks and Files\",\n    \"content\":[{\n      \"type\": \"paragraph\",\n      \"text\": \"This ruum was created using https://api.ruumapp.com/v1/ruums\"\n    },{\n      \"type\":\"task\",\n      \"description\":\"Schedule kickokff meeting\",\n      \"startDate\": {\n        \"day\": \"01\",\n        \"month\": \"1\",\n        \"year\": \"2018\"\n      },\n      \"dueDate\": {\n        \"day\": \"03\",\n        \"month\": \"1\",\n        \"year\": \"2018\"\n      },\n      \"status\": \"OPEN\",\n      \"assignees\": [\"ruum.user@xyz.com\"],\n      \"externalSystemLink\":{\n        \"objectType\":\"activity\",\n        \"objectId\":\"activity_123\"\n      }\n    },{\n    \t\"type\": \"file\",\n    \t\"fileType\": \"image/png\",\n    \t\"fileName\": \"ruum_logo.png\",\n    \t\"content\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAA\"\n    }]\n  }]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Ruum",
+			"request": {
+				"url": {
+					"raw": "https://api.ruumapp.com/v1/ruums/:ruumid",
+					"protocol": "https",
+					"host": [
+						"api",
+						"ruumapp",
+						"com"
+					],
+					"path": [
+						"v1",
+						"ruums",
+						":ruumid"
+					],
+					"query": [],
+					"variable": [
+						{
+							"key": "ruumid",
+							"value": ""
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "YOUR_AUTH_KEY",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test renaming a ruum and setting status\",\n    \"status\": \"ON_TRACK\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Ruums",
+			"request": {
+				"url": "https://api.ruumapp.com/v1/ruums",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "YOUR_AUTH_KEY",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Ruum API Test\",\n  \"externalSystemLink\":{\n    \"objectType\":\"deal\",\n    \"objectId\":\"deal_123\"\n  },\n  \"participants\": [\"steve.winkler@sap.com\"],\n  \"sections\":[{\n    \"title\":\"You can send Text, Tasks and Files\",\n    \"content\":[{\n      \"type\": \"paragraph\",\n      \"text\": \"This ruum was created using https://api.ruumapp.com/v1/ruums\"\n    },{\n      \"type\":\"task\",\n      \"description\":\"Schedule kickokff meeting\",\n      \"startDate\": {\n        \"day\": \"01\",\n        \"month\": \"1\",\n        \"year\": \"2018\"\n      },\n      \"dueDate\": {\n        \"day\": \"03\",\n        \"month\": \"1\",\n        \"year\": \"2018\"\n      },\n      \"status\": \"OPEN\",\n      \"assignees\": [\"participant1@compay.com\"],\n      \"externalSystemLink\":{\n        \"objectType\":\"activity\",\n        \"objectId\":\"activity_123\"\n      }\n    },{\n    \t\"type\": \"file\",\n    \t\"fileType\": \"image/png\",\n    \t\"fileName\": \"ruum_logo.png\",\n    \t\"content\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAA\"\n    }]\n  }]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ruum by id",
+			"request": {
+				"url": {
+					"raw": "https://api.ruumapp.com/v1/ruums/:ruumid",
+					"protocol": "https",
+					"host": [
+						"api",
+						"ruumapp",
+						"com"
+					],
+					"path": [
+						"v1",
+						"ruums",
+						":ruumid"
+					],
+					"query": [],
+					"variable": [
+						{
+							"key": "ruumid",
+							"value": ""
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "YOUR_AUTH_KEY",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\":\"Ruum API Test\",\n  \"externalSystemLink\":{\n    \"objectType\":\"deal\",\n    \"objectId\":\"deal_123\"\n  },\n  \"participants\": [\"steve.winkler@sap.com\"],\n  \"sections\":[{\n    \"title\":\"You can send Text, Tasks and Files\",\n    \"content\":[{\n      \"type\": \"paragraph\",\n      \"text\": \"This ruum was created using https://api.ruumapp.com/v1/ruums\"\n    },{\n      \"type\":\"task\",\n      \"description\":\"Schedule kickokff meeting\",\n      \"startDate\": {\n        \"day\": \"01\",\n        \"month\": \"1\",\n        \"year\": \"2018\"\n      },\n      \"dueDate\": {\n        \"day\": \"03\",\n        \"month\": \"1\",\n        \"year\": \"2018\"\n      },\n      \"status\": \"OPEN\",\n      \"assignees\": [\"participant1@compay.com\"],\n      \"externalSystemLink\":{\n        \"objectType\":\"activity\",\n        \"objectId\":\"activity_123\"\n      }\n    },{\n    \t\"type\": \"file\",\n    \t\"fileType\": \"image/png\",\n    \t\"fileName\": \"ruum_logo.png\",\n    \t\"content\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAA\"\n    }]\n  }]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Duplicate Ruum",
+			"request": {
+				"url": {
+					"raw": "https://api.ruumapp.com/v1/ruums/:ruumid",
+					"protocol": "https",
+					"host": [
+						"api",
+						"ruumapp",
+						"com"
+					],
+					"path": [
+						"v1",
+						"ruums",
+						":ruumid"
+					],
+					"query": [],
+					"variable": [
+						{
+							"key": "ruumid",
+							"value": ""
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "YOUR_AUTH_KEY",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{ \n\t    \"newRuumName\": \"Duplicated Ruum Test\",\n\t    \"participants\": [\"ruum_user@xyz.com\"]\n\t}\n\t      "
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
