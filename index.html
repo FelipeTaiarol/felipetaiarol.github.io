@@ -61,7 +61,7 @@
     <p>Url: /v1/ruums<br />
     Method: POST<br />
     body: Ruum (see typescript definition of JSON payload <a href="#data_model">here</a>)</p>
-    Example</p>  
+    Example</p>  <ie></ie>
     <div class="highlighter-rouge">
         <div class="highlight">
             <pre class="highlight">
@@ -112,7 +112,7 @@ POST /v1/ruums
     </div>
     Response: <code>{ ruumId: ruum_123 }</code> </p>
 
-<h3 id="update"><a href="#update">2. Update Ruum</a></h3>
+<h3 id="update"><a href="#update">2. Update ruum</a></h3>
 
     <p>Url: /v1/ruums/:ruumId<br />
     Method: PUT<br />
@@ -136,19 +136,56 @@ PUT /v1/ruums/ruum_123
    <p> This will completly replace the participants list. If you want to simply add a new participant you have to 
         send the complete list with the new one.</p>
 
-<h3 id="getall"><a href="#getall">3.1 Get all ruums create by the Integration Account</a></h3>
+<h3 id="add_section"><a href="#add_section">3. Add Section to ruum</a></h3>
+    <p>Add a section to the end of the ruum.</p>
+
+    <p>Url: /v1/ruums/:ruumId/sections<br />
+    Method: POST<br />
+    body: AddSectionPayload <br />
+    <div class="highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight">
+            <code>
+POST /v1/ruums/ruum_123/sections
+{
+    "title": "Close Plan Activities via API 2",
+    "content": [{
+    	"type": "paragraph",
+    	"text": "some text"
+	 },{
+	    "description": "Schedule kickoff meeting via API2",
+	    "assignees": ["felipe.bortolon.taiarol@sap.com"],
+	    "status": "OPEN",
+	    "type": "task"
+    },{
+      "type": "file",
+      "fileType": "image/png",
+      "fileName": "ruum_logo.png",
+      "content": "data:image/png;base64,iVBORw0KGgoAAAANSUhEg=="
+    }]
+}
+            </code>
+            </pre>
+        </div>
+    </div>
+
+     Response: <code>{ sectionId: section_api_ghs43fad }</code> </p>
+
+
+<h3 id="getall"><a href="#getall">4.1 Get all ruums create by the Integration Account</a></h3>
     <p>Url: /v1/ruums<br />
     Method: GET<br />
     Response: Ruum[] (see typescript definition of JSON payload <a href="#data_model">here</a>).</p>
     <p>Only Tasks are returned inside the section content, no Text or Files.</p>
 
-<h3 id="getid"><a href="#getid">3.2 Get ruum by id</a></h3>
+<h3 id="getid"><a href="#getid">4.2 Get ruum by id</a></h3>
     <p>Url: /v1/ruums/:ruumId<br />
     Method: GET<br />
     Response: Ruum (see typescript definition of JSON payload <a href="#data_model">here</a>).</p>
 
+    <p>Only Tasks are returned inside the section content, no Text or Files.</p>
 
-<h3 id="update_task1"><a href="#update_task1">4.1 Update a Task inside a ruum by external link<a/></h3>
+<h3 id="update_task1"><a href="#update_task1">5.1 Update a Task inside a ruum by external link<a/></h3>
 
     <p>Url: /v1/ruums/:ruumId/tasks/externallink/:objectId<br />
     Method: PUT<br />
@@ -177,7 +214,7 @@ PUT /v1/ruums/ruum_123/tasks/externallink/obj1
     </div>
 <p>Sending "assignees" will replace the existing list of assignees</p>
 
-<h3 id="update_task2"><a href="#update_task2">4.2 Update a Task inside a ruum by task id</a></h3>
+<h3 id="update_task2"><a href="#update_task2">5.2 Update a Task inside a ruum by task id</a></h3>
     <p>Update a task using the id the task has inside Ruum.</p>
     <p>Url: /v1/ruums/:ruumId/tasks/:taskId<br />
     Method: PUT<br />
@@ -207,7 +244,7 @@ PUT /v1/ruums/ruum_123/tasks/task_123
     <p>Sending "assignees" will replace the existing list of assignees</p>
 
 
-<h3 id="duplicate"><a href="#duplicate">5. Duplicate Ruum</a></h3>
+<h3 id="duplicate"><a href="#duplicate">6. Duplicate ruum</a></h3>
     <p>Duplicate ruum by id</p>
     <p>Url: /v1/ruums/:ruumId/duplicate<br />
     Method: POST<br />
