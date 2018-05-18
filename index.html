@@ -287,20 +287,22 @@ POST /v1/ruums/:ruumId/duplicate
             <pre class="highlight">
             <code>
 POST https://url_you_configured.com/
-{ 
-    type: 'TASK_EDITED',
-    ruumId: 'ruum_123',
-    externalObjectType: 'deal',
-    externalObjectId: 'deal_123',
-    task: { 
-        taskId: 'task_1',
-        externalObjectId: 'activity_123',
-        externalObjectType: 'activity',
-        fields: { 
-            description: 'new description' 
+{
+    event: { 
+        type: 'TASK_EDITED',
+        ruumId: 'ruum_123',
+        externalObjectType: 'deal',
+        externalObjectId: 'deal_123',
+        task: { 
+            taskId: 'task_1',
+            externalObjectId: 'activity_123',
+            externalObjectType: 'activity',
+            fields: { 
+                description: 'new description' 
+            } 
         } 
-    } 
-};
+    }
+}
             </code>
             </pre>
         </div>
