@@ -275,7 +275,7 @@ POST /v1/ruums/:ruumId/duplicate
         and every Activity inside that Deal is linked to a Task inside the ruum.</p>
     <img src="/docs/img/external_system_links.png"></img>
     
-<h2 id="webhooks"><a href="#webhooks">Web Hooks (soon)<a></h2>
+<h2 id="webhooks"><a href="#webhooks">Web Hooks<a></h2>
 
     <p>You can configure a HTTP endpoint that will receive webhook events when a ruum created by your Integration Account changes.</p>
 
@@ -310,7 +310,7 @@ POST https://url_you_configured.com/
 
     <p>We are going to support more events such as:</p>
         <code>
-TASK_ADDED, TASK_DELETED, RUUM_STATUS_CHANGED, RUUM_PARTICIPANTS_CHANGED
+TASK_ADDED, TASK_DELETED, TASK_EDITED, RUUM_STATUS_CHANGED
         </code>
     <p></br>if you think you will need more event types, send us an email.</p>
 
