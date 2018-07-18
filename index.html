@@ -34,23 +34,27 @@
     <p>‘Ruum’ is used to refer to the application. <br />
     ‘ruum’ is an individual project within Ruum.</p>
 
-<h2>Creating an Account</h2>
+<h2>Access to the API</h2>
 
-    <p>In order to consume our REST API you will need an Integration Account.</p>
+    <p>Only <a href="https://www.ruumapp.com/pricing/">Enterprise Users</a> have access to the REST API.</p>
 
-    <p>In order to get an Integration Account send an email to <a href="mailto:team@ruumapp.com?Subject=Ruum%20Integration%20Account" target="_top">team@ruumapp.com</a> and tell us 
-    what is the name of the system you want to integrate with Ruum.
-    </p>
+<h2>Authentication</h2>
 
-    <h2>Authentication</h2>
+    <p>The API supports two authentication methods: Basic Authentication and Cookie Authentication.</p>
 
-    <p>HTTP requests to the Ruum REST API are protected with HTTP Basic Authentication.</p>
+    <h3>Basic Authentication</h3>
+
+        <p>For basic authentication send the 'Authorization' header with the base64 enconded string with 'userEmail:password' or 'userId:password'.</p>
+
+        <img src="/docs/img/postman.png"></img>
     
-    <p>We will reply to your Integration Account request with an AccountId and a SecretKey.</p>
+    <h3>Cookie Authentication</h3>
+        <p>When the user logs in Ruum <a href="https://open.ruumapp.com/auth">here</a> a cookie with the domain <b>.ruumapp.com</b> is set, this same cookie can be used to authenticate to the REST API.</p>
 
-    <p>You will also receive a Authorization header that should be sent in all request, see example below:</p>
+    <h3>Integration Users</h3>
+        <p>For System-to-System integration scenarios you might want to use an Integration User, i.e. a Ruum user that is used by the system to talk to the Ruum's API.</p>
 
-    <img src="/docs/img/postman.png"></img>
+        <p>You can create a new Integration User in your Enterprise Account's <a href="https://admin.ruumapp.com/api">Admin Dashboard</a></p>
     
 <h2>API Endpoints</h2>
 
@@ -172,7 +176,7 @@ POST /v1/ruums/ruum_123/sections
      Response: <code>{ sectionId: section_api_ghs43fad }</code> </p>
 
 
-<h3 id="getall"><a href="#getall">4.1 Get all ruums create by the Integration Account</a></h3>
+<h3 id="getall"><a href="#getall">4.1 Get all ruums</a></h3>
     <p>Url: /v1/ruums<br />
     Method: GET<br />
     Response: Ruum[] (see typescript definition of JSON payload <a href="#data_model">here</a>).</p>
@@ -277,10 +281,10 @@ POST /v1/ruums/:ruumId/duplicate
     
 <h2 id="webhooks"><a href="#webhooks">Web Hooks<a></h2>
 
-    <p>You can configure a HTTP endpoint that will receive webhook events when a ruum created by your Integration Account changes.</p>
+    <p>You can configure a HTTP endpoint that will receive webhook events when a ruum created by your Integration User changes.</p>
 
     <p>For example: if you create a ruum using <a href="#create">this payload</a> and later a user went to the ruum and changed the task description.
-    If your Integration Account has a web hook configured, the URL will receive a POST request with the following payload: </p>
+    If your Integration User has a web hook configured, the URL will receive a POST request with the following payload: </p>
 
     <div class="highlighter-rouge">
         <div class="highlight">
