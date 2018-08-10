@@ -71,45 +71,60 @@
             <pre class="highlight">
             <code>
 POST /v1/ruums
+
 {
-  "name":"Complete Ruum From API",
-  "externalSystemLink":{
-    "objectType":"deal",
-    "objectId":"deal_123"
-  },
-  "participants": ["participant1@company.com", "participant2@company.com"],
-  "sections":[{
-    "title":"You can send Text, Tasks and Files",
-    "content":[{
-      "type": "paragraph",
-      "text": "This ruum was created using https://api.ruumapp.com/v1/ruums"
-    },{
-      "type":"task",
-      "description":"Schedule kickokff meeting",
-      "startDate": {
-        "day": "01",
-        "month": "1",
-        "year": "2018"
-      },
-      "dueDate": {
-        "day": "03",
-        "month": "1",
-        "year": "2018"
-      },
-      "status": "OPEN",
-      "assignees": ["participant1@compay.com"],
-      "externalSystemLink":{
-        "objectType":"activity",
-        "objectId":"activity_123"
-      }
-    },{
-    	"type": "file",
-    	"fileType": "image/png",
-    	"fileName": "ruum_logo.png",
-    	"content": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAA"
+    "name":"Complete Ruum From API",
+    "externalSystemLink":{
+      "objectType":"deal",
+      "objectId":"deal_123"
+    },
+    "participants": ["participant1@company.com", "participant2@company.com"],
+     "variables": [{
+      "id": "customer_name",
+      "dataType": "TEXT",
+      "value": "Customer ABC"
+    }],
+    "sections":[{
+      "title":"You can send Text, Tasks and Files",
+      "content":[{
+        "type": "paragraph",
+        "text": "This ruum was created using https://api.ruumapp.com/v1/ruums"
+      },{
+          "type": "paragraph",
+          "content": [{
+              "type": "text",
+              "text": "Paraprah with data variable inside the text. Customer name: "
+          },{ 
+              "type": "variable", 
+              "id": "customer_name" 
+          }]
+      },{
+        "type":"task",
+        "description":"Schedule kickokff meeting",
+        "startDate": {
+          "day": "01",
+          "month": "1",
+          "year": "2018"
+        },
+        "dueDate": {
+          "day": "03",
+          "month": "1",
+          "year": "2018"
+        },
+        "status": "OPEN",
+        "assignees": ["participant1@compay.com"],
+        "externalSystemLink":{
+          "objectType":"activity",
+          "objectId":"activity_123"
+        }
+      },{
+          "type": "file",
+          "fileType": "image/png",
+          "fileName": "ruum_logo.png",
+          "content": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAA"
+      }]
     }]
-  }]
-}
+  }
             </code>
             </pre>
         </div>
@@ -248,24 +263,37 @@ PUT /v1/ruums/ruum_123/tasks/task_123
     <p>Sending "assignees" will replace the existing list of assignees</p>
 
 
-<h3 id="duplicate"><a href="#duplicate">6. Duplicate ruum</a></h3>
-    <p>Duplicate ruum by id</p>
-    <p>Url: /v1/ruums/:ruumId/duplicate<br />
+<h3 id="createFromTemplate"><a href="#createFromTemplate">6. Create a ruum from a template</a></h3>
+    <p>Url: /v1/ruums<br />
     Method: POST<br />
-    body: DuplicateRuumPayload <br />
+    body: CreateRuumFromTemplatePayload <br />
     Response:  <code>{ ruumId: string }</code> <br />
-    <p>When you call this endpoint a new ruum is going to be created. All sections, tasks, files, emails and labels from ':ruumId' will be copied. 
-        The tasks will have no start date, due date or assignees. All comments will not be copied. The participants will be only the ones sent in the request body.</p>
+    <p>Any ruum can be used as a template to create another ruum.</p> 
+    <p>All sections, tasks, files, emails and labels from 'fromTemplateId' will be copied. The tasks will have no start date, due date or assignees. All comments will not be copied. 
+        The participants will be only the ones sent in the request body.</p>
+    <p>This is useful when used together with variables. You can create a ruum (manually or via API) and add data variables to it. </p>
+    
+    <p>You can then use it as a template to create other ruums populating the data variables you created.</p>
+
+    <p>To create a variable inside a ruum type '&lt;variable&gt;' on the canvas.</p>
+
     <p>Example:</p>
     <div class="highlighter-rouge">
         <div class="highlight">
             <pre class="highlight">
             <code>
-POST /v1/ruums/:ruumId/duplicate
-{ 
-    "newRuumName": "new ruum name",
-    "participants": ["new_ruum_participant@company.com"]
+POST /v1/ruums
+{
+    "name": "New Ruum",
+    "fromTemplateId": "ruum_1533886396595_b8wfzh6sdw",
+    "participants": ["participant1@company.com", "participant2@company.com"],
+    "variables": [{
+	   "id": "customer_name",
+	   "dataType": "TEXT",
+	   "value": "Another Customer"
+    }]
 }
+
             </code>
             </pre>
         </div>
@@ -342,6 +370,13 @@ interface Ruum{
     /** A list of emails of participants that will be invited to this ruum. */
     participants: string[];
     sections: CanvasSection[];
+    variables: Variable[];
+}
+
+export interface Variable{
+    id: string;
+    dataType: 'TEXT' | 'NUMBER';
+    value: string;
 }
 
 export type RuumStatus = 'ON_TRACK' | 'MINOR_DELAY' | 'MAJOR_DELAY' | 'COMPLETED'
@@ -360,7 +395,20 @@ export interface CanvasSection{
 
 export interface Paragraph{
     type: 'paragraph';
+    content: ParagraphContent[]
+}
+
+export type ParagraphContentType = 'text' | 'variable';
+export type ParagraphContent = ParagraphTextContent | ParagraphVariableContent;
+
+export interface ParagraphTextContent{
+    type: 'text';
     text: string;
+}
+
+export interface ParagraphVariableContent{
+    type: 'variable';
+    id:  string;
 }
 
 export interface Task{
